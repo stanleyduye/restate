@@ -31,7 +31,6 @@
         "expo-splash-screen",
         {
           "image": "./assets/images/splash-icon.png",
-
           "resizeMode": "cover",
           "backgroundColor": "#ffffff",
           "enableFullScreenImage_legacy": true,
@@ -41,12 +40,12 @@
       "expo-font",
       {
         "fonts": [
-          "./assests/fonts/Rubik-Bold.ttf",
-          "./assests/fonts/Rubik-ExtraBold.ttf",
-          "./assests/fonts/Rubik-Medium.ttf",
-          "./assests/fonts/Rubik-Light.ttf",
-          "./assests/fonts/Rubik-Regular.ttf",
-          "./assests/fonts/Rubik-SemiBold.ttf"
+          "./assets/fonts/Rubik-Bold.ttf",
+          "./assets/fonts/Rubik-ExtraBold.ttf",
+          "./assets/fonts/Rubik-Medium.ttf",
+          "./assets/fonts/Rubik-Light.ttf",
+          "./assets/fonts/Rubik-Regular.ttf",
+          "./assets/fonts/Rubik-SemiBold.ttf"
         ]
       }
      ]
