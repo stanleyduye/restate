@@ -44,9 +44,10 @@ const SettingsItem = ({
 
 const Profile = () => {
   const { user, refetch } = useGlobalContext();
+
   const handleLogout = async () => {
     const result = await logout();
-    console.log("Logging out...", result);
+
     if (result) {
       Alert.alert("Success", "You have been logged out successfully.");
       refetch();

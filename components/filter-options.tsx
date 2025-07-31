@@ -51,7 +51,7 @@ const FilterOptions = ({ show, onClose }: FilterOptionsProps) => {
   };
   const screenWidth = Dimensions.get("window").width;
 
-  const sliderLength = screenWidth - 25;
+  const sliderLength = screenWidth - 100;
 
   return (
     <Modal visible={show} transparent={true} animationType="fade">
@@ -92,7 +92,7 @@ const FilterOptions = ({ show, onClose }: FilterOptionsProps) => {
                   borderColor: "#0061FF1A",
                 }}
                 customMarker={({ currentValue }) => (
-                  <View className="relative ">
+                  <View className="relative">
                     <View className="absolute bg-white border-primary-300 border-[3px] w-6 h-6 rounded-full -top-3" />
                     <Text className="text-sm font-rubik-semibold text-primary-300 absolute top-5 -left-2">
                       ${currentValue}

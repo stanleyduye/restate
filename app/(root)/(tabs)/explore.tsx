@@ -48,7 +48,6 @@ export default function Explore() {
       <FlatList
         data={properties || []}
         renderItem={({ item }) => {
-          // Map DefaultDocument to EstateItem
           const estateItem: EstateItem = {
             $id: item.$id,
             $sequence: item.$sequence,

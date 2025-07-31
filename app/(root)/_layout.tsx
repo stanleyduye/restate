@@ -1,7 +1,7 @@
 import { useGlobalContext } from "@/lib/global-provider";
 import { Redirect, Slot } from "expo-router";
 import React from "react";
-import { ActivityIndicator } from "react-native";
+import { ActivityIndicator, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function AppLayout() {
@@ -9,9 +9,18 @@ export default function AppLayout() {
 
   if (loading) {
     return (
-      <SafeAreaView className="bg-white flex-1 justify-center items-center">
-        <ActivityIndicator className="text-primary-300" />
-      </SafeAreaView>
+      <>
+        <SafeAreaView className="flex-1 justify-center items-center">
+          <StatusBar
+            hidden={false}
+            barStyle="dark-content"
+            networkActivityIndicatorVisible={true}
+            translucent={false}
+            animated={true}
+          />
+          <ActivityIndicator className="text-primary-300" />
+        </SafeAreaView>
+      </>
     );
   }
 
