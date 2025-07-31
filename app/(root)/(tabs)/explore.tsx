@@ -1,9 +1,9 @@
-import { Card } from "@/components/cards";
+import { Card, EstateItem } from "@/components/cards";
 import Filters from "@/components/filters";
 import NoResults from "@/components/no-results";
 import Search from "@/components/search";
 import icons from "@/constants/icons";
-import { getLatestProperties, getProperties } from "@/lib/appwrite";
+import { getProperties } from "@/lib/appwrite";
 import { useAppwrite } from "@/lib/useAppWrite";
 import { router, useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
@@ -20,9 +20,6 @@ import { SafeAreaView } from "react-native-safe-area-context";
 export default function Explore() {
   const params = useLocalSearchParams<{ query?: string; filter?: string }>();
 
-  const { data: latestProperties, loading: loadingLatestProperties } =
-    useAppwrite({ fn: getLatestProperties });
-
   const {
     data: properties,
     loading,
@@ -32,7 +29,6 @@ export default function Explore() {
     params: {
       filter: params.filter!,
       query: params.query!,
-      limit: 20,
     },
     skip: true,
   });
@@ -41,18 +37,35 @@ export default function Explore() {
     refetch({
       filter: params.filter!,
       query: params.query!,
-      limit: 6,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.filter, params.query]);
 
   const handleCardPress = (id: string) => router.push(`/properties/${id}`);
+
   return (
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={properties || []}
-        renderItem={({ item }) => (
-          <Card item={item} onPress={() => handleCardPress(item.$id)} />
-        )}
+        renderItem={({ item }) => {
+          // Map DefaultDocument to EstateItem
+          const estateItem: EstateItem = {
+            $id: item.$id,
+            $sequence: item.$sequence,
+            $collectionId: item.$collectionId,
+            $databaseId: item.$databaseId,
+            $createdAt: item.$createdAt,
+            $updatedAt: item.$updatedAt,
+            $permissions: item.$permissions,
+            image: item.image,
+            name: item.name,
+            address: item.address,
+            price: item.price,
+          };
+          return (
+            <Card item={estateItem} onPress={() => handleCardPress(item.$id)} />
+          );
+        }}
         keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
@@ -75,7 +88,7 @@ export default function Explore() {
                 <Image source={icons.backArrow} className="size-5" />
               </TouchableOpacity>
               <Text className="text-base mr-2 text-centeer font-rubik-medium text-black-300">
-                Search for you ideal home
+                Search for your ideal home
               </Text>
               <Image source={icons.bell} className="w-6 h-6" />
             </View>

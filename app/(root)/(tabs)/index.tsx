@@ -1,4 +1,4 @@
-import { Card, FeaturedCard } from "@/components/cards";
+import { Card, EstateItem, FeaturedCard } from "@/components/cards";
 import Filters from "@/components/filters";
 import NoResults from "@/components/no-results";
 import Search from "@/components/search";
@@ -46,6 +46,7 @@ export default function Index() {
       query: params.query!,
       limit: 6,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [params.filter, params.query]);
 
   const getGreeting = () => {
@@ -61,9 +62,24 @@ export default function Index() {
     <SafeAreaView className="bg-white h-full">
       <FlatList
         data={properties || []}
-        renderItem={({ item }) => (
-          <Card item={item} onPress={() => handleCardPress(item.$id)} />
-        )}
+        renderItem={({ item }) => {
+          const estateItem: EstateItem = {
+            $id: item.$id,
+            $sequence: item.$sequence,
+            $collectionId: item.$collectionId,
+            $databaseId: item.$databaseId,
+            $createdAt: item.$createdAt,
+            $updatedAt: item.$updatedAt,
+            $permissions: item.$permissions,
+            image: item.image,
+            name: item.name,
+            address: item.address,
+            price: item.price,
+          };
+          return (
+            <Card item={estateItem} onPress={() => handleCardPress(item.$id)} />
+          );
+        }}
         keyExtractor={(item) => item.$id}
         numColumns={2}
         contentContainerClassName="pb-32"
@@ -114,12 +130,27 @@ export default function Index() {
               ) : (
                 <FlatList
                   data={latestProperties || []}
-                  renderItem={({ item }) => (
-                    <FeaturedCard
-                      item={item}
-                      onPress={() => handleCardPress(item.$id)}
-                    />
-                  )}
+                  renderItem={({ item }) => {
+                    const estateItem: EstateItem = {
+                      $id: item.$id,
+                      $sequence: item.$sequence,
+                      $collectionId: item.$collectionId,
+                      $databaseId: item.$databaseId,
+                      $createdAt: item.$createdAt,
+                      $updatedAt: item.$updatedAt,
+                      $permissions: item.$permissions,
+                      image: item.image,
+                      name: item.name,
+                      address: item.address,
+                      price: item.price,
+                    };
+                    return (
+                      <FeaturedCard
+                        item={estateItem}
+                        onPress={() => handleCardPress(item.$id)}
+                      />
+                    );
+                  }}
                   keyExtractor={(item) => item.$id}
                   horizontal
                   showsHorizontalScrollIndicator={false}

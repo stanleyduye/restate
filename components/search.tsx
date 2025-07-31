@@ -1,14 +1,16 @@
-import { router, useLocalSearchParams, usePathname } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import React from "react";
 import { Image, TextInput, TouchableOpacity, View } from "react-native";
 import { useDebouncedCallback } from "use-debounce";
 
 import icons from "@/constants/icons";
+import { SlidersHorizontal } from "lucide-react-native";
+import FilterOptions from "./filter-options";
 
 const Search = () => {
-  const path = usePathname();
   const params = useLocalSearchParams<{ query?: string }>();
   const [search, setSearch] = React.useState<string>(params.query || "");
+  const [openFilterModal, setOpenFilterModal] = React.useState<boolean>(false);
 
   const debouncedSearch = useDebouncedCallback(
     (text: string) => router.setParams({ query: text }),
@@ -18,6 +20,10 @@ const Search = () => {
   const handleSearch = (text: string) => {
     setSearch(text);
     debouncedSearch(text);
+  };
+
+  const onModalClose = () => {
+    setOpenFilterModal(false);
   };
 
   return (
@@ -33,9 +39,10 @@ const Search = () => {
         />
       </View>
 
-      <TouchableOpacity>
-        <Image source={icons.filter} className="size-5" />
+      <TouchableOpacity onPress={() => setOpenFilterModal(true)}>
+        <SlidersHorizontal size={16} color="#8c8e98" />
       </TouchableOpacity>
+      <FilterOptions show={openFilterModal} onClose={onModalClose} />
     </View>
   );
 };

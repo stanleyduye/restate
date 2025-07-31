@@ -4,9 +4,17 @@ import React from "react";
 import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Models } from "react-native-appwrite";
 
+export interface EstateItem extends Models.Document {
+  image: string;
+  rating?: number;
+  name: string;
+  address: string;
+  price: number;
+}
+
 interface Props {
   onPress?: () => void;
-  item: Models.Document;
+  item: EstateItem;
 }
 
 export const FeaturedCard = ({ onPress, item }: Props) => {
